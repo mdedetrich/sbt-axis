@@ -2,7 +2,7 @@ An sbt version of the [Axis Tools Maven Plugin][1]. Supports calling `WSDL2Java`
 
 You should also consider using [scalaxb][2].
 
-Compatible with sbt 0.11.2 or 0.11.3.
+Compatible with sbt 0.11.2, 0.11.3 or 0.13.1.
 
 Configuration
 -------------
@@ -21,7 +21,7 @@ Light configuration example (in `build.sbt`):
 
 Full configuration example:
 
-    import SbtAxis.Plugin.{ SbtAxisKeys, sbtAxisSettings }
+    import sbtaxis.Plugin.{ SbtAxisKeys, sbtAxisSettings }
 
     class MyBuild extends Build {
          lazy val myProject = Project("Mine", file("."), settings = Defaults.defaultSettings ++ sbtAxisSettings ++ Seq(
