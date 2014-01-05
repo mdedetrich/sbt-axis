@@ -1,4 +1,6 @@
-An sbt version of the [Axis Tools Maven Plugin][1]. Supports calling `WSDL2Java` only, to generate Java from WSDL. 
+An sbt version of the [Axis Tools Maven Plugin][1]. Supports calling
+`WSDL2Java` only, to generate Java from WSDL. This is a fork of
+[mdr's plugin][3] to be able to use more rencent versions of Axis2.
 
 You should also consider using [scalaxb][2].
 
@@ -34,3 +36,4 @@ please consider adding a new setting to the plug-in and sending a pull request ;
 
   [1]: http://mojo.codehaus.org/axistools-maven-plugin/
   [2]: http://scalaxb.org/sbt-scalaxb
+  [3]: https://github.com/mdr/sbt-axis
