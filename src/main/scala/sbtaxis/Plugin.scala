@@ -21,6 +21,7 @@ object Plugin extends sbt.Plugin {
     val wsdl2java = TaskKey[Seq[File]]("wsdl2java", "Runs WSDL2Java")
     val wsdlFiles = SettingKey[Seq[File]]("axis-wsdl-files")
     val packageSpace = SettingKey[Option[String]]("axis-package-space", "Package to create Java files under, corresponds to -p / --package option in WSDL2Java")
+    val timeout = SettingKey[Option[Int]]("axis-timeout","Timeout used when generating sources")
     val otherArgs = SettingKey[Seq[String]]("axis-other-args", "Other arguments to pass to WSDL2Java")
 
   }
@@ -33,25 +34,27 @@ object Plugin extends sbt.Plugin {
       wsdlFiles := Nil,
       packageSpace := None,
       otherArgs := Nil,
-      wsdl2java <<= (streams, wsdlFiles, javaSource in SbtAxis, packageSpace, otherArgs) map { runWsdlToJavas },
+      timeout := Some(45),
+      wsdl2java <<= (streams, wsdlFiles, javaSource in SbtAxis, packageSpace, timeout,otherArgs) map { runWsdlToJavas },
       sourceGenerators in Compile <+= wsdl2java,
       managedSourceDirectories in Compile <+= (javaSource in SbtAxis),
       cleanFiles <+= (javaSource in SbtAxis))
 
-  private case class WSDL2JavaSettings(dest: File, packageSpace: Option[String], otherArgs: Seq[String])
+  private case class WSDL2JavaSettings(dest: File, packageSpace: Option[String], timeout:Option[Int],otherArgs: Seq[String])
 
   private def runWsdlToJavas(
     streams: TaskStreams,
     wsdlFiles: Seq[File],
     dest: File,
     packageSpace: Option[String],
+    timeout: Option[Int],
     otherArgs: Seq[String]): Seq[File] =
     wsdlFiles.flatMap(wsdl =>
-      runWsImport(streams, wsdl, WSDL2JavaSettings(dest, packageSpace, otherArgs)))
+      runWsImport(streams, wsdl, WSDL2JavaSettings(dest, packageSpace, timeout,otherArgs)))
 
   private def makeArgs(wsdlFile: File, settings: WSDL2JavaSettings): Seq[String] =
     settings.packageSpace.toSeq.flatMap(p => Seq("--package", p)) ++
-      Seq("--output", settings.dest.getAbsolutePath) ++
+      Seq("-O",settings.timeout.map(_.toString).getOrElse("-1")) ++
       settings.otherArgs ++
       Seq(wsdlFile.getAbsolutePath)
 
@@ -66,7 +69,7 @@ object Plugin extends sbt.Plugin {
     try
       new WSDL2JavaWrapper().execute(args.toArray)
     catch {
-      case t =>
+      case t: Throwable =>
         streams.log.error("Problem running WSDL2Java " + args.mkString(" "))
         throw t
     }
