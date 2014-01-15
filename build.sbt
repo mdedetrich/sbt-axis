@@ -1,14 +1,14 @@
 name := "sbt-axis"
 
-organization := "com.github.mdr"
+organization := "com.github.sortega"
 
-version := "0.0.1-SNAPSHOT"
+version := "0.1.0"
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.10.3"
 
 sbtPlugin := true
 
-CrossBuilding.crossSbtVersions := Seq("0.11.2", "0.11.3")
+CrossBuilding.crossSbtVersions := Seq("0.11.3", "0.11.3", "0.13.1")
 
 libraryDependencies ++= Seq(
   "axis" % "axis" % "1.4",
@@ -47,7 +47,3 @@ pomExtra := {
       </developer>
     </developers>
   }
-
-EclipseKeys.withSource := true
-
-EclipseKeys.eclipseOutput := Some("bin")
