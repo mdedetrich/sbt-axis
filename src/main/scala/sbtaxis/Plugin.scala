@@ -23,7 +23,7 @@ object Plugin extends sbt.Plugin {
     val packageSpace = SettingKey[Option[String]]("axis-package-space", "Package to create Java files under, corresponds to -p / --package option in WSDL2Java")
     val timeout = SettingKey[Option[Int]]("axis-timeout","Timeout used when generating sources")
     val otherArgs = SettingKey[Seq[String]]("axis-other-args", "Other arguments to pass to WSDL2Java")
-
+    val outputDir = SettingKey[File]("axis-output-dir","Output directory for the sources")
   }
 
   import SbtAxisKeys._
@@ -35,12 +35,21 @@ object Plugin extends sbt.Plugin {
       packageSpace := None,
       otherArgs := Nil,
       timeout := Some(45),
-      wsdl2java <<= (streams, wsdlFiles, javaSource in SbtAxis, packageSpace, timeout,otherArgs) map { runWsdlToJavas },
+      outputDir := sourceManaged.value,
+      wsdl2java <<= (streams, wsdlFiles, javaSource in SbtAxis, packageSpace, timeout,outputDir,otherArgs) map { runWsdlToJavas },
       sourceGenerators in Compile <+= wsdl2java,
       managedSourceDirectories in Compile <+= (javaSource in SbtAxis),
-      cleanFiles <+= (javaSource in SbtAxis))
+      cleanFiles <+= (javaSource in SbtAxis),
+      libraryDependencies ++= Seq(
+        "axis" % "axis" % "1.4",
+        "axis" % "axis-saaj" % "1.4",
+        "axis" % "axis-wsdl4j" % "1.5.1",
+        "javax.activation" % "activation" % "1.1.1",
+        "javax.mail" % "mail" % "1.4"
+      )
+    )
 
-  private case class WSDL2JavaSettings(dest: File, packageSpace: Option[String], timeout:Option[Int],otherArgs: Seq[String])
+  private case class WSDL2JavaSettings(dest: File, packageSpace: Option[String], timeout:Option[Int],outputDir:File,otherArgs: Seq[String])
 
   private def runWsdlToJavas(
     streams: TaskStreams,
@@ -48,13 +57,15 @@ object Plugin extends sbt.Plugin {
     dest: File,
     packageSpace: Option[String],
     timeout: Option[Int],
+    outputDir: File,
     otherArgs: Seq[String]): Seq[File] =
     wsdlFiles.flatMap(wsdl =>
-      runWsImport(streams, wsdl, WSDL2JavaSettings(dest, packageSpace, timeout,otherArgs)))
+      runWsImport(streams, wsdl, WSDL2JavaSettings(dest, packageSpace, timeout,outputDir,otherArgs))).distinct
 
   private def makeArgs(wsdlFile: File, settings: WSDL2JavaSettings): Seq[String] =
     settings.packageSpace.toSeq.flatMap(p => Seq("--package", p)) ++
       Seq("-O",settings.timeout.map(_.toString).getOrElse("-1")) ++
+      Seq("-o",settings.outputDir.getCanonicalPath) ++
       settings.otherArgs ++
       Seq(wsdlFile.getAbsolutePath)
 
@@ -73,7 +84,7 @@ object Plugin extends sbt.Plugin {
         streams.log.error("Problem running WSDL2Java " + args.mkString(" "))
         throw t
     }
-    (settings.dest ** "*.java").get
+    (settings.outputDir ** "*.java").get
   }
 
 }
