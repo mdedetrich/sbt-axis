@@ -1,6 +1,6 @@
 name := "sbt-axis"
 
-organization := "com.mdedetrich"
+organization := "com.github.mdedetrich"
 
 version := "0.1.0"
 
