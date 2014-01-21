@@ -1,6 +1,6 @@
 name := "sbt-axis"
 
-organization := "com.github.sortega"
+organization := "com.mdedetrich"
 
 version := "0.2.0"
 
@@ -33,31 +33,3 @@ publishTo <<= isSnapshot(
   else   Some("releases" at "http://bitmarket.no-ip.biz:8086/nexus/content/repositories/releases"))
 
 credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
-
-pomExtra := {
-    <inceptionYear>2012</inceptionYear>
-    <url>http://github.com/sortega/sbt-axis</url>
-    <licenses>
-      <license>
-        <name>MIT License</name>
-        <url>http://www.opensource.org/licenses/mit-license.php</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
-    <scm>
-      <url>git@github.com:sortega/sbt-axis.git</url>
-      <connection>scm:git:git@github.com:sortega/sbt-axis</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>mdr</id>
-        <name>Matt Russell</name>
-        <url>https://github.com/mdr/</url>
-      </developer>
-      <developer>
-        <id>sortega</id>
-        <name>Sebastian Ortega</name>
-        <url>https://github.com/sortega/</url>
-      </developer>
-    </developers>
-  }
