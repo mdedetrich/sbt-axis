@@ -17,32 +17,45 @@ there are some wsdl's that don't compile with the newer Axis2 due to them using 
 
 # Configuration
 
-
 If you want to use Axis, put this in your `project/plugins.sbt`:
 
-    addSbtPlugin("com.github.mdedetrich" % "sbt-axis" % "0.1.0")
+First the repository
+
+```scala
+resolvers ++= Seq("mdedetrich-releases" at "http://artifactory.mdedetrich.com/plugins-release")
+```
+
+Then the plugin
+
+```scala
+addSbtPlugin("com.mdedetrich" % "sbt-axis" % "0.1.0")
+```
 
 For Axis2, put this in your `project/plugins.sbt`:
 
-    addSbtPlugin("com.github.mdedetrich" % "sbt-axis" % "0.2.0")
+```scala
+addSbtPlugin("com.mdedetrich" % "sbt-axis" % "0.2.0")
+```
 
 Light configuration example (in `build.sbt`):
 
-    seq(sbtAxisSettings : _*)
+```scala
+seq(sbtAxisSettings : _*)
+SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl")
+SbtAxisKeys.packageSpace := Some("com.example")
+```
 
-    SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl")
-
-    SbtAxisKeys.packageSpace := Some("com.example")
 
 Full configuration example:
 
-    import sbtaxis.Plugin.{ SbtAxisKeys, sbtAxisSettings }
-
-    class MyBuild extends Build {
-         lazy val myProject = Project("Mine", file("."), settings = Defaults.defaultSettings ++ sbtAxisSettings ++ Seq(
-             SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl"),
-             SbtAxisKeys.packageSpace := Some("com.example"))
-    }
+```scala
+import sbtaxis.Plugin.{ SbtAxisKeys, sbtAxisSettings }
+class MyBuild extends Build {
+     lazy val myProject = Project("Mine", file("."), settings = Defaults.defaultSettings ++ sbtAxisSettings ++ Seq(
+         SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl"),
+         SbtAxisKeys.packageSpace := Some("com.example"))
+}
+```
 
 There is an `SbtAxisKeys.otherArgs` for other `WSDL2Java` arguments
 
