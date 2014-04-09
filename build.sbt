@@ -19,11 +19,3 @@ libraryDependencies ++= Seq(
   "commons-logging" % "commons-logging" % "1.0.4",
   "commons-discovery" % "commons-discovery" % "0.2"
 )
-
-publishMavenStyle := true
-
-publishArtifact in Test := false
-
-publishTo <<= isSnapshot(
-  if (_) Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/") 
-  else   Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2/"))
