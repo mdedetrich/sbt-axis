@@ -22,7 +22,7 @@ If you want to use Axis, put this in your `project/plugins.sbt`:
 First the repository
 
 ```scala
-resolvers ++= Seq("mdedetrich-releases" at "http://artifactory.mdedetrich.com/libs-release")
+resolvers ++= Seq("mdedetrich-releases" at "http://artifactory.mdedetrich.com/plugins-release")
 ```
 
 Then the plugin
