@@ -23,13 +23,3 @@ libraryDependencies ++= Seq(
   "commons-logging" % "commons-logging" % "1.0.4",
   "commons-discovery" % "commons-discovery" % "0.2"
 )
-
-publishMavenStyle := true
-
-publishArtifact in Test := false
-
-publishTo <<= isSnapshot(
-  if (_) Some("snapshots" at "http://bitmarket.no-ip.biz:8086/nexus/content/repositories/snapshots")
-  else   Some("releases" at "http://bitmarket.no-ip.biz:8086/nexus/content/repositories/releases"))
-
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
