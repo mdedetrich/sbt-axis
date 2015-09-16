@@ -10,7 +10,7 @@ sbtPlugin := true
 
 crossBuildingSettings
 
-CrossBuilding.crossSbtVersions := Seq("0.11.3", "0.13.1")
+CrossBuilding.crossSbtVersions := Seq("0.13.1", "0.11.3","0.11.2")
 
 libraryDependencies ++= Seq(
   "org.apache.axis2" % "axis2-kernel" % "1.6.2",
@@ -31,7 +31,7 @@ publishTo := {
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
 publishArtifact in Test := false
