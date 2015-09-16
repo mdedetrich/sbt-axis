@@ -8,7 +8,7 @@ scalaVersion := "2.10.5"
 
 sbtPlugin := true
 
-CrossBuilding.crossSbtVersions := Seq("0.13.1","0.11.3", "0.11.2")
+CrossBuilding.crossSbtVersions := Seq("0.13.9","0.12.3","0.11.3")
 
 libraryDependencies ++= Seq(
   "axis" % "axis" % "1.4",
