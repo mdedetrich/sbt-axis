@@ -19,22 +19,14 @@ there are some wsdl's that don't compile with the newer Axis2 due to them using 
 
 If you want to use Axis, put this in your `project/plugins.sbt`:
 
-First the repository
-
 ```scala
-resolvers ++= Seq("mdedetrich-releases" at "http://artifactory.mdedetrich.com/plugins-release")
-```
-
-Then the plugin
-
-```scala
-addSbtPlugin("com.mdedetrich" % "sbt-axis" % "0.1.0")
+addSbtPlugin("org.mdedetrich" % "sbt-axis" % "0.1.0")
 ```
 
 For Axis2, put this in your `project/plugins.sbt`:
 
 ```scala
-addSbtPlugin("com.mdedetrich" % "sbt-axis" % "0.2.0")
+addSbtPlugin("org.mdedetrich" % "sbt-axis" % "0.2.0")
 ```
 
 Light configuration example (in `build.sbt`):
