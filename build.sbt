@@ -41,8 +41,8 @@ pomIncludeRepository := { _ => false }
 pomExtra := <url>https://github.com/mdedetrich/sbt-axis</url>
   <licenses>
     <license>
-      <name>BSD-style</name>
-      <url>http://www.opensource.org/licenses/bsd-license.php</url>
+      <name>MIT</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
