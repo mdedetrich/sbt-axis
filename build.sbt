@@ -10,7 +10,7 @@ sbtPlugin := true
 
 crossBuildingSettings
 
-CrossBuilding.crossSbtVersions := Seq("0.13.1", "0.11.3","0.11.2")
+CrossBuilding.crossSbtVersions := Seq("0.13.1", "0.12.3")
 
 libraryDependencies ++= Seq(
   "org.apache.axis2" % "axis2-kernel" % "1.6.2",
