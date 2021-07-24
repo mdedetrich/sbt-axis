@@ -32,11 +32,11 @@ addSbtPlugin("org.mdedetrich" % "sbt-axis" % "0.2.0")
 Configuration example (in `build.sbt`):
 
 ```sbt
-wsdlFiles := baseDirectory(_ / "service.wsdl")
-packageSpace := Some("com.example")
+axisWsdlFiles := baseDirectory(_ / "service.wsdl")
+axisPackageSpace := Some("com.example")
 ```
 
-There is an `otherArgs` for other `WSDL2Java` arguments
+There is an `axisOtherArgs` for other `WSDL2Java` arguments
 
   [1]: http://mojo.codehaus.org/axistools-maven-plugin/
   [2]: http://scalaxb.org/sbt-scalaxb
