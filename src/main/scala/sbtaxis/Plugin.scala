@@ -1,22 +1,20 @@
 package sbtaxis
 
-import sbt._
-import sbt.Keys._
-
 import org.apache.axis.utils._
 import org.apache.axis.wsdl._
 import org.apache.axis.wsdl.gen._
-
-import java.lang.reflect.Field
-import java.util.List
+import sbt.Keys._
+import sbt.TupleSyntax._
+import sbt._
 
 import scala.collection.JavaConverters._
 
-object Plugin extends sbt.Plugin {
+object AxisPlugin extends sbt.AutoPlugin {
 
-  val SbtAxis = config("sbtaxis")
+  override val trigger: PluginTrigger = noTrigger
 
-  object SbtAxisKeys {
+  object autoImport {
+    val SbtAxis = config("sbtaxis")
 
     val wsdl2java = TaskKey[Seq[File]]("wsdl2java", "Runs WSDL2Java")
     val wsdlFiles = SettingKey[Seq[File]]("axis-wsdl-files")
@@ -26,27 +24,24 @@ object Plugin extends sbt.Plugin {
     val outputDir = SettingKey[File]("axis-output-dir","Output directory for the sources")
   }
 
-  import SbtAxisKeys._
+  import autoImport._
 
-  val sbtAxisSettings: Seq[Setting[_]] =
+  override lazy val projectConfigurations = Seq(
+    SbtAxis
+  )
+
+  override lazy val projectSettings: Seq[Setting[_]] =
     Seq(
-      javaSource in SbtAxis <<= sourceManaged in Compile,
+      SbtAxis / javaSource := (Compile / sourceManaged).value,
       wsdlFiles := Nil,
       packageSpace := None,
       otherArgs := Nil,
       timeout := Some(45),
       outputDir := sourceManaged.value,
-      wsdl2java <<= (streams, wsdlFiles, javaSource in SbtAxis, packageSpace, timeout,outputDir,otherArgs) map { runWsdlToJavas },
-      sourceGenerators in Compile <+= wsdl2java,
-      managedSourceDirectories in Compile <+= (javaSource in SbtAxis),
-      cleanFiles <+= (javaSource in SbtAxis),
-      libraryDependencies ++= Seq(
-        "axis" % "axis" % "1.4",
-        "axis" % "axis-saaj" % "1.4",
-        "axis" % "axis-wsdl4j" % "1.5.1",
-        "javax.activation" % "activation" % "1.1.1",
-        "javax.mail" % "mail" % "1.4"
-      )
+      wsdl2java := { (streams, wsdlFiles, SbtAxis/ javaSource, packageSpace, timeout,outputDir,otherArgs) map { runWsdlToJavas } }.value,
+      Compile / sourceGenerators += wsdl2java,
+      Compile / managedSourceDirectories += (SbtAxis / javaSource).value,
+      cleanFiles += (SbtAxis / javaSource).value
     )
 
   private case class WSDL2JavaSettings(dest: File, packageSpace: Option[String], timeout:Option[Int],outputDir:File,otherArgs: Seq[String])
