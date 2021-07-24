@@ -1,5 +1,3 @@
-addSbtPlugin("net.virtual-void" % "sbt-cross-building" % "0.8.1")
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.1.2")
 
-resolvers += Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns)
-
-addSbtPlugin("com.typesafe.sbt" % "sbt-pgp" % "0.8.1")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.7")

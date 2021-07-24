@@ -6,7 +6,7 @@ An sbt version of the [Axis Tools Maven Plugin][1]. Supports calling
 
 You should also consider using [scalaxb][2].
 
-Compatible with sbt 0.11.2, 0.11.3 or 0.13.1.
+Compatible with sbt 1.x.
 
 # Notes
 
@@ -29,27 +29,14 @@ For Axis2, put this in your `project/plugins.sbt`:
 addSbtPlugin("org.mdedetrich" % "sbt-axis" % "0.2.0")
 ```
 
-Light configuration example (in `build.sbt`):
+Configuration example (in `build.sbt`):
 
-```scala
-seq(sbtAxisSettings : _*)
-SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl")
-SbtAxisKeys.packageSpace := Some("com.example")
+```sbt
+wsdlFiles := baseDirectory(_ / "service.wsdl")
+packageSpace := Some("com.example")
 ```
 
-
-Full configuration example:
-
-```scala
-import sbtaxis.Plugin.{ SbtAxisKeys, sbtAxisSettings }
-class MyBuild extends Build {
-     lazy val myProject = Project("Mine", file("."), settings = Defaults.defaultSettings ++ sbtAxisSettings ++ Seq(
-         SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl"),
-         SbtAxisKeys.packageSpace := Some("com.example"))
-}
-```
-
-There is an `SbtAxisKeys.otherArgs` for other `WSDL2Java` arguments
+There is an `otherArgs` for other `WSDL2Java` arguments
 
   [1]: http://mojo.codehaus.org/axistools-maven-plugin/
   [2]: http://scalaxb.org/sbt-scalaxb
