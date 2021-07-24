@@ -12,11 +12,11 @@ object AxisPlugin extends sbt.AutoPlugin {
   object autoImport {
     lazy val SbtAxis = config("sbtaxis")
 
-    val wsdl2java = TaskKey[Seq[File]]("wsdl2java", "Runs WSDL2Java")
-    val wsdlFiles = SettingKey[Seq[File]]("axis-wsdl-files")
-    val packageSpace = SettingKey[Option[String]]("axis-package-space", "Package to create Java files under, corresponds to -p / --package option in WSDL2Java")
-    val dataBindingName = SettingKey[Option[String]]("axis-data-binding-name", "Data binding framework name. Possible values include \"adb\", \"xmlbeans\", \"jibx\".")
-    val otherArgs = SettingKey[Seq[String]]("axis-other-args", "Other arguments to pass to WSDL2Java")
+    val axisWsdl2java = TaskKey[Seq[File]]("axis-wsdl-2-java", "Runs WSDL2Java")
+    val axisWsdlFiles = SettingKey[Seq[File]]("axis-wsdl-files")
+    val axisPackageSpace = SettingKey[Option[String]]("axis-package-space", "Package to create Java files under, corresponds to -p / --package option in WSDL2Java")
+    val axisDataBindingName = SettingKey[Option[String]]("axis-data-binding-name", "Data binding framework name. Possible values include \"adb\", \"xmlbeans\", \"jibx\".")
+    val axisOtherArgs = SettingKey[Seq[String]]("axis-other-args", "Other arguments to pass to WSDL2Java")
   }
 
   import autoImport._
@@ -29,12 +29,12 @@ object AxisPlugin extends sbt.AutoPlugin {
   override lazy val projectSettings: Seq[Setting[_]] =
     Seq(
       SbtAxis / javaSource := (Compile / sourceManaged).value,
-      wsdlFiles := Nil,
-      packageSpace := None,
-      dataBindingName := None,
-      otherArgs := Nil,
-      wsdl2java := { (streams, wsdlFiles, SbtAxis / javaSource, packageSpace, dataBindingName, otherArgs) map { runWsdlToJavas } }.value,
-      Compile / sourceGenerators += wsdl2java,
+      axisWsdlFiles := Nil,
+      axisPackageSpace := None,
+      axisDataBindingName := None,
+      axisOtherArgs := Nil,
+      axisWsdl2java := { (streams, axisWsdlFiles, SbtAxis / javaSource, axisPackageSpace, axisDataBindingName, axisOtherArgs) map { runWsdlToJavas } }.value,
+      Compile / sourceGenerators += axisWsdl2java,
       Compile / managedSourceDirectories += (SbtAxis / javaSource).value,
       cleanFiles += (SbtAxis / javaSource).value
     )
