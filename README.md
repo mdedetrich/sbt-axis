@@ -2,11 +2,9 @@ An sbt version of the [Axis Tools Maven Plugin][1]. Supports calling
 `WSDL2Java` only, to generate Java from WSDL. Loosely based off
 [mdr's plugin][3].
 
-
-
 You should also consider using [scalaxb][2].
 
-Compatible with sbt 0.11.2, 0.11.3 or 0.13.1.
+Compatible with sbt 1.x
 
 # Notes
 
@@ -41,11 +39,12 @@ SbtAxisKeys.packageSpace := Some("com.example")
 Full configuration example:
 
 ```scala
-import sbtaxis.Plugin.{ SbtAxisKeys, sbtAxisSettings }
+import sbtaxis.AxisPlugin.{SbtAxisKeys, sbtAxisSettings}
+
 class MyBuild extends Build {
-     lazy val myProject = Project("Mine", file("."), settings = Defaults.defaultSettings ++ sbtAxisSettings ++ Seq(
-         SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl"),
-         SbtAxisKeys.packageSpace := Some("com.example"))
+  lazy val myProject = Project("Mine", file("."), settings = Defaults.defaultSettings ++ sbtAxisSettings ++ Seq(
+    SbtAxisKeys.wsdlFiles <+= baseDirectory(_ / "service.wsdl"),
+    SbtAxisKeys.packageSpace := Some("com.example"))
 }
 ```
 
