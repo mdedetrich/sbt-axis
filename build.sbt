@@ -32,5 +32,6 @@ lazy val root = project
     ),
     githubWorkflowPublishTargetBranches := Seq(),
     // This is set to false due to https://github.com/sbt/sbt/issues/6468
-    githubWorkflowUseSbtThinClient := false
+    githubWorkflowUseSbtThinClient := false,
+    versionScheme                  := Some(VersionScheme.EarlySemVer)
   )
