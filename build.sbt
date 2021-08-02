@@ -16,32 +16,17 @@ lazy val root = project.in(file("."))
       "commons-discovery" % "commons-discovery" % "0.2"
     ),
     publishMavenStyle := true,
-    publishTo := {
-      val nexus = "https://oss.sonatype.org/"
-      if (isSnapshot.value)
-        Some("snapshots" at nexus + "content/repositories/snapshots")
-      else
-        Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    },
+    publishTo := sonatypePublishTo.value,
     Test / publishArtifact := false,
     pomIncludeRepository := { _ => false },
-    pomExtra := <url>https://github.com/mdedetrich/sbt-axis</url>
-      <licenses>
-        <license>
-          <name>MIT</name>
-          <url>http://www.opensource.org/licenses/mit-license.php</url>
-          <distribution>repo</distribution>
-        </license>
-      </licenses>
-      <scm>
-        <url>git@github.com:mdedetrich/sbt-axis.git</url>
-        <connection>scm:git:git@github.com:mdedetrich/sbt-axis.git</connection>
-      </scm>
-      <developers>
-        <developer>
-          <id>mdedetrich</id>
-          <name>Matthew de Detrich</name>
-          <email>mdedetrich@gmail.com</email>
-        </developer>
-      </developers>
+    homepage := Some(url("https://github.com/mdedetrich/sbt-axis")),
+    licenses += ("MIT", url("https://opensource.org/licenses/mit")),
+    developers := List(
+      Developer("mdr", "Matthew D. Russell", "", url("https://github.com/mdr")),
+      Developer("sortega", "Sebastián Ortega", "sebastian.ortega@letgo.com", url("https://github.com/sortega")),
+      Developer("mdedetrich", "Matthew de Detrich", "mdedetrich@gmail.com", url("https://github.com/mdedetrich"))
+    ),
+    scmInfo := Some(
+      ScmInfo(url("https://github.com/mdedetrich/sbt-axis"), "git:git@github.com:mdedetrich/sbt-axis.git")
+    )
   )
