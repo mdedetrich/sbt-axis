@@ -6,7 +6,6 @@ lazy val root = project
   .settings(
     name         := "sbt-axis",
     organization := "org.mdedetrich",
-    version      := "0.1.0",
     libraryDependencies ++= Seq(
       "axis"              % "axis"              % axisVersion,
       "axis"              % "axis-saaj"         % axisVersion,
