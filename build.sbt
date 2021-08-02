@@ -12,9 +12,9 @@ lazy val root = project
       "axis"              % "axis-saaj"         % axisVersion,
       "axis"              % "axis-wsdl4j"       % "1.5.1",
       "javax.activation"  % "activation"        % "1.1.1",
-      "javax.mail"        % "mail"              % "1.4",
-      "commons-logging"   % "commons-logging"   % "1.0.4",
-      "commons-discovery" % "commons-discovery" % "0.2"
+      "javax.mail"        % "mail"              % "1.4.6",
+      "commons-logging"   % "commons-logging"   % "1.2",
+      "commons-discovery" % "commons-discovery" % "0.5"
     ),
     publishMavenStyle      := true,
     publishTo              := sonatypePublishTo.value,

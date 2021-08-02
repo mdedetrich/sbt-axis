@@ -59,7 +59,7 @@ object AxisPlugin extends sbt.AutoPlugin {
         "axis"             % "axis-saaj"   % "1.4",
         "axis"             % "axis-wsdl4j" % "1.5.1",
         "javax.activation" % "activation"  % "1.1.1",
-        "javax.mail"       % "mail"        % "1.4"
+        "javax.mail"       % "mail"        % "1.4.6"
       )
     )
 
