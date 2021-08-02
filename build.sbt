@@ -29,5 +29,8 @@ lazy val root = project
     ),
     scmInfo := Some(
       ScmInfo(url("https://github.com/mdedetrich/sbt-axis"), "git:git@github.com:mdedetrich/sbt-axis.git")
-    )
+    ),
+    githubWorkflowPublishTargetBranches := Seq(),
+    // This is set to false due to https://github.com/sbt/sbt/issues/6468
+    githubWorkflowUseSbtThinClient := false
   )
